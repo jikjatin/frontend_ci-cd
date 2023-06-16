@@ -2,20 +2,29 @@ name: Deploy Frontend
 on:
   push:
     branches:
-      - main
-
+      - main # check your repo, your default branch might be master!
+ 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+<<<<<<< HEAD
       - run: docker build -t cygnetops/react-test -f Dockerfile.dev .
       - run: docker run -e CI=true cygnetops/react-test npm test
 
       - name: Generate deployment package
         run: zip -r deploy.zip . -x '*.git*'
 
+=======
+      - run: docker build -t jatinrajput/frontend_ci-cd -f Dockerfile.dev .
+      - run: docker run -e CI=true jatinrajput/frontend_ci-cd npm test
+ 
+      - name: Generate deployment package
+        run: zip -r deploy.zip . -x '*.git*'
+ 
+>>>>>>> 7d6985a01c1bf3069f2a859dc68fae3b948ca4c4
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v18
         with:
